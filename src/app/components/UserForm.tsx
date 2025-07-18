@@ -1,11 +1,20 @@
 "use client";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
 
 interface User {
     id: number;
     name: string;
     email: string;
 }
+
+const userSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("Invalid email address"),
+});
+type UserFormData = z.infer<typeof userSchema>;
 
 export default function UserForm({
   initial,
@@ -16,30 +25,43 @@ export default function UserForm({
   onSubmit: (user: Omit<User, "id">) => void;
   onCancel: () => void;
 }) {
-  const [name, setName] = useState(initial?.name || "");
-  const [email, setEmail] = useState(initial?.email || "");
+//  const [name, setName] = useState(initial?.name || "");
+//  const [email, setEmail] = useState(initial?.email || "");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<UserFormData>({
+    resolver: zodResolver(userSchema),
+    defaultValues: {
+      name: initial?.name || "",
+      email: initial?.email || "",
+    },
+  });
+
+    React.useEffect(() => {
+    reset({
+      name: initial?.name || "",
+      email: initial?.email || "",
+    });
+  }, [initial, reset]);
 
   return (
     <form
       className="flex flex-col gap-2"
-      onSubmit={e => {
-        e.preventDefault();
-        onSubmit({ name, email});
-      }}>
+      onSubmit={handleSubmit(data => onSubmit(data))}
+    >
     <input
         className="border rounded px-2 py-1"
         placeholder="Name"
-        value={name}
-        onChange={e => setName(e.target.value)}
-        required
+        {...register("name")}
     />
     <input
     className="border rounded px-2 py-1"
     placeholder="Email"
-    type="email"
-    value={email}
-    onChange={e => setEmail(e.target.value)}
-    required
+    {...register("email")}
     />
     <div className="flex gap-2 mt-2">
         <button type="submit" className="bg-blue-600 text-white px-3 py-1 rounded">Save</button>
