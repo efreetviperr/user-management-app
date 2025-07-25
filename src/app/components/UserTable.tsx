@@ -11,7 +11,7 @@ export default function UserTable({
     onRemove: (id: number) => void;
 }) {
     return (
-        <table className="min-w-[350px] border border-gray-300 mb-8">
+        <table className="min-w-h [350px] border border-gray-300 mb-8">
             <thead>
                 <tr className="bg-gray-500">
                     <th className="px-4 py-2 border">ID</th>

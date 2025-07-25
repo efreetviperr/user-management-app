@@ -25,13 +25,10 @@ export default function UserForm({
   onSubmit: (user: Omit<User, "id">) => void;
   onCancel: () => void;
 }) {
-//  const [name, setName] = useState(initial?.name || "");
-//  const [email, setEmail] = useState(initial?.email || "");
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
   } = useForm<UserFormData>({
     resolver: zodResolver(userSchema),

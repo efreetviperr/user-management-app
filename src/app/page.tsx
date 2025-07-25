@@ -4,13 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import UserForm, { User } from "@/app/components/UserForm";
 import UserTable from "@/app/components/UserTable";
 
-//* const initialUsers: User[] = [ 
- // { id: 1, name: "Mailyn Balaoro", email: "mailyn@example.com" },
- // { id: 2, name: "Jane Costura", email: "jane@example.com" },
- // { id: 3, name: "Evelyn Placer", email: "evelyn@example.com" },
- // { id: 4, name: "Kath Gocoyo", email: "kath@example.com" },
-  
-// ];
 
 const fetchUsers = async (): Promise<User[]> => {
   const res = await fetch("https://jsonplaceholder.typicode.com/users");
@@ -21,9 +14,9 @@ const fetchUsers = async (): Promise<User[]> => {
     email: u.email,
   }));
 };
-
+ 
 export default function Home() {
-  const { data, isLoading, error } = useQuery({
+  const { data } = useQuery({
     queryKey: ["users"],
     queryFn: fetchUsers,
   });
