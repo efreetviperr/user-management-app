@@ -8,14 +8,8 @@ import UserTable from "@/app/components/UserTable";
 const fetchUsers = async (): Promise<User[]> => {
   const res = await fetch("https://jsonplaceholder.typicode.com/users");
   const data = await res.json();
-  return data.slice(0, 5).map((u: any) => {
-    return ({
-      id: u.id,
-      name: u.name,
-      email: u.email,
-    });
-  });
-};
+  return data.slice(0, 5);
+}
 
 export default function Home() {
   const { data } = useQuery({
@@ -35,7 +29,7 @@ export default function Home() {
     setUsers(prev => [...prev, {
       ...user, id: prev.length ? Math.max(...prev.map(u => u.id)) +1:1},
     ]);
-    setShowAdd(false);
+    setShowAdd(true);
   };
 
   const updateUser = (user: Omit<User, "id">) => {
