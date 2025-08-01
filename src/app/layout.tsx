@@ -1,20 +1,24 @@
-"use client";
-import "./globals.css";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useState } from 'react';
+'use client'
+import './globals.css'
+import Providers from './provider'
 
+export const client: any = {
+  title: 'User Management App',
+  description: 'A Next.js application for managing users with authentication',
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const [queryClient] = useState(() => new QueryClient());
   return (
     <html lang="en">
       <body>
-        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
-  );
+  )
 }
