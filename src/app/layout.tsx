@@ -1,8 +1,9 @@
 'use client'
+import { Metadata } from 'next'
 import './globals.css'
 import Providers from './provider'
 
-export const client: any = {
+export const client: Metadata= {
   title: 'User Management App',
   description: 'A Next.js application for managing users with authentication',
 }
